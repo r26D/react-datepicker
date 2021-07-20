@@ -161,15 +161,24 @@ export function formatDate(date, formatStr, locale) {
 }
 
 export function safeDateFormat(date, { dateFormat, locale }) {
-  return (
-    (date &&
-      formatDate(
-        date,
-        Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
-        locale
-      )) ||
-    ""
-  );
+  try {
+    return (
+        (date &&
+            formatDate(
+                date,
+                Array.isArray(dateFormat) ? dateFormat[0] : dateFormat,
+                locale
+            )) ||
+        ""
+    );
+  } catch (e) {
+    if (e instanceof RangeError) {
+     ""
+    }
+    else {
+      throw(e)
+    }
+  }
 }
 
 export function safeDateRangeFormat(startDate, endDate, props) {
